@@ -14,6 +14,7 @@ from algorithms.gssci import GlobalStateSplitCovarianceIntersection
 from algorithms.gsci import GlobalStateCovarianceIntersection
 from algorithms.lssci import LocalStateSplitCovarianceIntersection
 
+np.random.seed(0)
 
 def load_datasets(path, datasets):
     '''
@@ -161,8 +162,8 @@ def execute(UTIAS, algorithms, comm_type, comm_range, comm_rate, comm_prob_fail,
             # generate the results for every dataset using each algorithm
             results[MRCLAM][alg] = generate_results(UTIAS[MRCLAM], alg, comm_type, comm_range, comm_rate, comm_prob_fail, dt, offset, duration)
 
-            sys.stdout.write("\033[F")
-            print('Dataset {} // Algorithm {} {}'.format(MRCLAM[-1], alg.upper(), u'\u2713'))
+            sys.stdout.write("\033[F") # Esc
+            print('Dataset {} // Algorithm {} {}'.format(MRCLAM[-1], alg.upper(), u'\u2713')) # 2 .upper to UPPER 3 √
 
         print('')
 
@@ -414,7 +415,7 @@ def analyze(results, settings, save=False):
                 save_path = '../results/' + 'type-' + str(comm_type) + '_' + 'range-' + str(comm_range) + '_' + 'rate-' + str(comm_rate) + '_' + 'probfail-' + str(comm_prob_fail) + '_' 'dt-' + str(dt) + '_' + 'offset-' + str(offset) + '_' + 'duration-' + str(duration) + '/' + MRCLAM + '/'
                 fig_name = 'robot' + str(r+1) + '_trajectory'
                 Path(save_path).mkdir(parents=True, exist_ok=True)
-                plt.savefig(save_path + fig_name + '.pdf')
+                plt.savefig(save_path + fig_name + '.png')
 
                 np.savetxt(save_path + fig_name + '_x.txt', y_est, fmt='%.5f', delimiter=',')
                 np.savetxt(save_path + fig_name + '_y.txt', -1.0*x_est, fmt='%.5f', delimiter=',')
@@ -454,7 +455,7 @@ def analyze(results, settings, save=False):
                 save_path = '../results/' + 'type-' + str(comm_type) + '_' + 'range-' + str(comm_range) + '_' + 'rate-' + str(comm_rate) + '_' + 'probfail-' + str(comm_prob_fail) + '_' 'dt-' + str(dt) + '_' + 'offset-' + str(offset) + '_' + 'duration-' + str(duration) + '/' + MRCLAM + '/'
                 fig_name = 'robot' + str(r+1) + '_error'
                 Path(save_path).mkdir(parents=True, exist_ok=True)
-                plt.savefig(save_path + fig_name + '.pdf')
+                plt.savefig(save_path + fig_name + '.png')
 
 
         # combined trajectory plot
@@ -540,7 +541,7 @@ def analyze(results, settings, save=False):
             save_path = '../results/' + 'type-' + str(comm_type) + '_' + 'range-' + str(comm_range) + '_' + 'rate-' + str(comm_rate) + '_' + 'probfail-' + str(comm_prob_fail) + '_' 'dt-' + str(dt) + '_' + 'offset-' + str(offset) + '_' + 'duration-' + str(duration) + '/' + MRCLAM + '/'
             fig_name = 'trajectories'
             Path(save_path).mkdir(parents=True, exist_ok=True)
-            plt.savefig(save_path + fig_name + '.pdf')
+            plt.savefig(save_path + fig_name + '.png')
 
         # RMSE
         plt.figure()
@@ -595,7 +596,7 @@ def analyze(results, settings, save=False):
             save_path = '../results/' + 'type-' + str(comm_type) + '_' + 'range-' + str(comm_range) + '_' + 'rate-' + str(comm_rate) + '_' + 'probfail-' + str(comm_prob_fail) + '_' 'dt-' + str(dt) + '_' + 'offset-' + str(offset) + '_' + 'duration-' + str(duration) + '/' + MRCLAM + '/'
             fig_name = 'rmse'
             Path(save_path).mkdir(parents=True, exist_ok=True)
-            plt.savefig(save_path + fig_name + '.pdf')
+            plt.savefig(save_path + fig_name + '.png')
             
             np.savetxt(save_path + 'avg_rmse.csv', avg_rmse, fmt='%.4f', delimiter=',')
             np.savetxt(save_path + 'std_rmse.csv', std_rmse, fmt='%.4f', delimiter=',')
@@ -639,7 +640,7 @@ def analyze(results, settings, save=False):
             save_path = '../results/' + 'type-' + str(comm_type) + '_' + 'range-' + str(comm_range) + '_' + 'rate-' + str(comm_rate) + '_' + 'probfail-' + str(comm_prob_fail) + '_' 'dt-' + str(dt) + '_' + 'offset-' + str(offset) + '_' + 'duration-' + str(duration) + '/' + MRCLAM + '/'
             fig_name = 'rmte'
             Path(save_path).mkdir(parents=True, exist_ok=True)
-            plt.savefig(save_path + fig_name + '.pdf')
+            plt.savefig(save_path + fig_name + '.png')
 
         # close all figures
         plt.close('all')
@@ -722,7 +723,7 @@ def plot_avg_rmse():
     plt.xticks(np.arange(0.0,1.1,0.1))
     plt.legend()
     
-    plt.savefig('average_rmse_vs_fail_rate.pdf')
+    plt.savefig('average_rmse_vs_fail_rate.png')
 
     
     
