@@ -6,7 +6,7 @@ NUM_ROBOTS = 5
 SENSOR_VAR = 0.01
 RANGE_VAR = 0.0215
 BEARING_VAR = 0.01
-
+V_UPPER_VAR = 0.0036
 
 class Landmark():
 

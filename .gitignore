@@ -3,6 +3,6 @@
 
 data/
 irobot_create/
-# results/
+results/
 __pycache__/
 main_fix.py
